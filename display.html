@@ -6,7 +6,8 @@
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-   </head>
+       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
    
 <body class="show-data">
      <header class="main-header">
@@ -36,6 +37,9 @@
              <li><div class="icon"><img src="./image/Ellipse 1.svg" alt=""></div>
             <div class="content">Payment</div></li>
         </ul>
+
+
+        
      </div>
         </div>
     <div class="container">
@@ -51,7 +55,102 @@
 <section class="plan-comparison">
 <div class="container">
     <div class="row">
-        
+
+<div class="pricing-container">
+<div class="mobile-tabs">
+        <button class="tab-btn active" data-target="2">VOYAGER  <div class="price voyager-price">$15.98</div></button>
+        <button class="tab-btn" data-target="3">VOYAGER PLUS  <div class="price plus-price">$41.34</div></button>
+    </div>
+<table>
+
+    <!-- HEADER ROW -->
+    <tr>
+        <th></th>
+        <th class="plan-header">
+            <div class="plan-icon voyager-icon"><img src="./image/Group 11.svg" alt=""></div>
+            <h2>VOYAGER</h2>
+            <div class="old-price">From <span>$17.37</span></div>
+            <div class="price voyager-price">$15.98</div>
+            <div class="small-text">Total Cost</div>
+            <div class="small-text pls">Policy benefits listed below, per traveller limits apply</div>
+        </th>
+        <th class="plan-header">
+            <div class="plan-icon plus-icon"><img src="./image/Group 11.svg" alt=""></div>
+            <h2>VOYAGER PLUS</h2>
+            <div class="old-price">From <span>$44.94</span></div>
+            <div class="price plus-price">$41.34</div>
+            <div class="small-text">Total Cost</div>
+            <div class="small-text pls">Policy benefits listed below, per traveller limits apply</div>
+        </th>
+    </tr>
+
+    <!-- BENEFITS -->
+    <tr>
+        <td>Cancellation or trip interruption <span><img src="image/Button.svg" alt=""></span></td>
+        <td>$1,000</td>
+        <td>
+            <select>
+                <option>$4,000</option>
+                <option>$6,000</option>
+            </select>
+        </td>
+    </tr>
+
+    <tr>
+        <td>Luggage and personal effects<span><img src="image/Button.svg" alt=""></span></td>
+        <td>$500</td>
+        <td>
+            <select>
+                <option>$1,000</option>
+                <option>$2,000</option>
+            </select>
+        </td>
+    </tr>
+
+    <tr class="not">
+        <td>Travel Delay<span><img src="image/Button.svg" alt=""></span></td>
+        <td>Not available</td>
+        <td>$1,000</td>
+    </tr>
+
+    <tr class="not">
+        <td>Personal Liability<span><img src="image/Button.svg" alt=""></span></td>
+        <td>Not available</td>
+        <td>$2,500,000</td>
+    </tr>
+
+    <!-- OPTIONAL COVER TITLE -->
+    <tr class="optional-row">
+        <td colspan="3">Optional Cover</td>
+    </tr>
+
+    <tr>
+        <td>Rental Vehicle Excess<span><img src="image/Button.svg" alt=""></span></td>
+        <td>Not available</td>
+        <td>
+            <select>
+                <option>Not Selected</option>
+                <option>$5,000</option>
+            </select>
+        </td>
+    </tr>
+
+    <!-- BUTTON ROW -->
+    <tr>
+        <td></td>
+        <td>
+            <button class="btn-dark plan">CHOOSE PLAN</button>
+            <a href="#">View Policy Information</a>
+        </td>
+        <td>
+            <button class="btn-yellow plan">CHOOSE PLAN</button>
+            <a href="#">View Policy Information</a>
+        </td>
+    </tr>
+
+</table>
+
+</div>
     </div>
 </div>
 </section>
@@ -69,8 +168,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if (data) {
     display.innerHTML = `
       <p><strong>Destination:</strong> ${data.destination || 'N/A'}</p>
-      <div>
-      <label><strong>Dates:</strong> <p> ${data.leave || 'N/A'}</p>
+      <div class='date'>
+      <label><strong>Dates:</strong> <p> ${data.leave || 'N/A'}</p> 
       <p>${data.ret || 'N/A'}</p></label>
       </div>
       <p><strong>Traveller Ages:</strong> ${data.age || 'N/A'}</p>
@@ -97,6 +196,32 @@ document.addEventListener('DOMContentLoaded', function() {
   } else {
     display.innerHTML = '<p>No data found.</p>';
   }
+});
+
+
+
+
+
+
+$(document).ready(function(){
+
+    function showColumn(index){
+        $('table th:nth-child(2), table td:nth-child(2)').hide();
+        $('table th:nth-child(3), table td:nth-child(3)').hide();
+        $('table th:nth-child('+index+'), table td:nth-child('+index+')').show();
+    }
+
+    $('.tab-btn').click(function(){
+        $('.tab-btn').removeClass('active');
+        $(this).addClass('active');
+        let col = $(this).data('target');
+        showColumn(col);
+    });
+
+    if($(window).width() <= 768){
+        showColumn(2);
+    }
+
 });
 </script>
 
@@ -136,6 +261,28 @@ button#back-btn {
     top: -50px;
     left: 0;
 }
+.mobile-tabs{
+    display:none;
+    text-align:center;
+    border-bottom:1px solid #ddd;
+}
+
+.mobile-tabs button{
+    width:100%;
+    padding: 20px;
+    border:none;
+    background:#fff;
+    font-weight:bold;
+    cursor:pointer;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+}
+
+.mobile-tabs button.active{
+    background:#F4F6F8;
+    color:#6A6D72;
+}
 button#back-btn {
     position: absolute;
     top: -140px;
@@ -153,19 +300,32 @@ button#back-btn img{
     top: 6px;
 
 }
+div#display-data p:first-child{
+    text-align: left;
+}
+.plan {
+    padding: 17px 24px;
+    display: block;
+    margin: auto auto 15px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    border: 1px solid;
+    cursor: pointer;
+
+}
 .main-pro {
     box-shadow: 0px 0px 20px -8px #00000040;
     display: flex;
-    padding: 20px;
+    padding: 20px 0;
 }
 ul.progress {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
 }
 ul.progress li{
-    width: 25%;
     position: relative;
+    width: 100%;
 }
 .icon:after {
     content: '';
@@ -219,10 +379,164 @@ button#edit-btn {
     font-size: 14px;
     color: #0078D4;
     position: absolute;
-    right: 0;
+    right: 30px;
     top: 39px;
     cursor: pointer;
 }
+table tr:last-child td{
+    padding-top: 10px;
+}
+ul.progress li:last-child .icon:after {
+    display: none;
+}
+ul.progress li:last-child {
+    width: max-content;
+}
+.date p {
+    margin: 0 10px;
+}
+
+.pricing-container{
+    background:#fff;
+    border:1px solid #DCDAD7;
+    margin-bottom: 57px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+table select {
+    border: 1px solid #E2E2E2;
+    padding: 7px 48px;
+font-size: 14px;
+line-height: 21px;
+vertical-align: middle;
+color: #212529;
+
+}
+tr.optional-row ~ tr td:nth-child(even){
+    background: #FBFBFB;
+
+}
+tr.optional-row ~ tr td{
+    border: 0;
+}
+tr.optional-row {
+    border-bottom: 1px solid #E2E2E2;
+}
+th, td{
+    padding:20px 30px;
+    border-top:1px solid #DCDAD7;
+    text-align:center;
+    font-size:16px;
+    width: 33.33%;
+    line-height: 24px;
+    color: #212529;
+} td span{
+    vertical-align: middle;
+    margin-left: 4px;
+}
+
+th:first-child,
+td:first-child{
+    text-align:left;
+}
+tr th:nth-child(even) {
+    background: #EEEEEE;
+}
+.plan-header{
+    padding:38px 68px 30px;
+}
+
+.plan-icon{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    margin:0 auto 15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom: 15px;
+}
+th.plan-header > h2 {
+    font-size: 24px;
+    line-height: 32px;
+    color: #212529;
+    font-weight: 400;
+    margin-bottom: 13px;
+}
+.voyager-icon{
+    background:#102a4d;
+}
+
+.plus-icon{
+    background:#f4b323;
+}
+
+.old-price{
+    color:#909395;
+    font-size:22px;
+    line-height: 33px;
+    margin-bottom: 8px;
+    font-weight: 400;
+}
+.old-price span{
+    text-decoration:line-through;
+}
+.price{
+    font-size:30px;
+    font-weight:bold;
+    margin:10px 0;
+}
+
+.voyager-price{
+    color:#0B2347;
+   
+
+}
+.price {
+ font-size: 40px;
+    line-height: 48px;
+    margin: 0 0 5px 0;
+}
+.plus-price{
+    color:#f4b323;
+}
+
+.small-text{
+    font-size:15px;
+    color:#909395;
+    line-height: 22px;
+        font-weight: 400;
+        margin-bottom: 13px;
+}
+
+.optional-row{
+    font-weight:bold;
+    color:#0B2347;
+}
+
+
+
+.btn-dark{
+    background:#102a4d;
+    color:#fff;
+}
+
+.btn-yellow{
+    background:#f4b323;
+    color:#fff;
+}
+.small-text.pls {
+    font-size: 13px;
+    line-height: 19px;
+    margin: 0;
+}
+tr.not td:nth-child(even) {
+    background: #EEEEEE;
+}
+
 
 @media (max-width: 767px) {
 div#display-data {
@@ -252,6 +566,18 @@ button#edit-btn {
     right: 20px;
     top: 20px;
 }
+table tr:first-child th,
+table tr:last-child td{
+transform: translateX(50%) translateY(0%);
+   
+}
+tr th,
+tr.optional-row ~ tr td:nth-child(even) {
+    background: transparent !important  ;
+}
+ .plan {
+    padding: 17px;
+}   
 img.desktop-logo {
     display: none;
 }
@@ -266,5 +592,62 @@ button#back-btn {
     top: -142px;
     left: 30px;
 }
+ .mobile-tabs{
+        display:flex;
+        flex-direction: column;
+    }
+
+    th:nth-child(2),
+    td:nth-child(2){
+        display:none;
+    }
+
+    th:nth-child(3),
+    td:nth-child(3){
+        display:none;
+    }
+    th:empty {
+    display: none;
+}
+th, td{
+    width: 100%;
+}
+.pricing-container{
+    overflow-x: hidden;
+}
+.plan-header {
+    padding: 20px;
+}
+table select {
+    padding: 7px 20px;
+}
+tr td{
+    width: 50%;
+    font-size: 15px;
+}
+th, td {
+    padding: 17px 9px
+}
+tr:first-child th{
+    width: 100%;
+}
+tr td:empty {
+    display: none;
+}
+.mobile-tabs  .price {
+    font-size: 19px;
+    line-height: 23px;
+}
+tr td{
+    border: 1px solid #DADADA;
+}
+}
+@media (max-width: 360px) {
+    th, td {
+        padding: 17px 7px;
+    }
+    .plan-header {
+        padding: 12px;
+    }
 }
 </style>
